@@ -1,0 +1,426 @@
+USE [master]
+GO
+/****** Object:  Database [MPTor]    Script Date: 29.05.2018 20:23:23 ******/
+CREATE DATABASE [MPTor]
+
+GO
+ALTER DATABASE [MPTor] SET COMPATIBILITY_LEVEL = 130
+GO
+IF (1 = FULLTEXTSERVICEPROPERTY('IsFullTextInstalled'))
+begin
+EXEC [MPTor].[dbo].[sp_fulltext_database] @action = 'enable'
+end
+GO
+ALTER DATABASE [MPTor] SET ANSI_NULL_DEFAULT OFF 
+GO
+ALTER DATABASE [MPTor] SET ANSI_NULLS OFF 
+GO
+ALTER DATABASE [MPTor] SET ANSI_PADDING OFF 
+GO
+ALTER DATABASE [MPTor] SET ANSI_WARNINGS OFF 
+GO
+ALTER DATABASE [MPTor] SET ARITHABORT OFF 
+GO
+ALTER DATABASE [MPTor] SET AUTO_CLOSE OFF 
+GO
+ALTER DATABASE [MPTor] SET AUTO_SHRINK OFF 
+GO
+ALTER DATABASE [MPTor] SET AUTO_UPDATE_STATISTICS ON 
+GO
+ALTER DATABASE [MPTor] SET CURSOR_CLOSE_ON_COMMIT OFF 
+GO
+ALTER DATABASE [MPTor] SET CURSOR_DEFAULT  GLOBAL 
+GO
+ALTER DATABASE [MPTor] SET CONCAT_NULL_YIELDS_NULL OFF 
+GO
+ALTER DATABASE [MPTor] SET NUMERIC_ROUNDABORT OFF 
+GO
+ALTER DATABASE [MPTor] SET QUOTED_IDENTIFIER OFF 
+GO
+ALTER DATABASE [MPTor] SET RECURSIVE_TRIGGERS OFF 
+GO
+ALTER DATABASE [MPTor] SET  DISABLE_BROKER 
+GO
+ALTER DATABASE [MPTor] SET AUTO_UPDATE_STATISTICS_ASYNC OFF 
+GO
+ALTER DATABASE [MPTor] SET DATE_CORRELATION_OPTIMIZATION OFF 
+GO
+ALTER DATABASE [MPTor] SET TRUSTWORTHY OFF 
+GO
+ALTER DATABASE [MPTor] SET ALLOW_SNAPSHOT_ISOLATION OFF 
+GO
+ALTER DATABASE [MPTor] SET PARAMETERIZATION SIMPLE 
+GO
+ALTER DATABASE [MPTor] SET READ_COMMITTED_SNAPSHOT OFF 
+GO
+ALTER DATABASE [MPTor] SET HONOR_BROKER_PRIORITY OFF 
+GO
+ALTER DATABASE [MPTor] SET RECOVERY SIMPLE 
+GO
+ALTER DATABASE [MPTor] SET  MULTI_USER 
+GO
+ALTER DATABASE [MPTor] SET PAGE_VERIFY CHECKSUM  
+GO
+ALTER DATABASE [MPTor] SET DB_CHAINING OFF 
+GO
+ALTER DATABASE [MPTor] SET FILESTREAM( NON_TRANSACTED_ACCESS = OFF ) 
+GO
+ALTER DATABASE [MPTor] SET TARGET_RECOVERY_TIME = 0 SECONDS 
+GO
+ALTER DATABASE [MPTor] SET DELAYED_DURABILITY = DISABLED 
+GO
+ALTER DATABASE [MPTor] SET QUERY_STORE = OFF
+GO
+USE [MPTor]
+GO
+ALTER DATABASE SCOPED CONFIGURATION SET IDENTITY_CACHE = ON;
+GO
+ALTER DATABASE SCOPED CONFIGURATION SET LEGACY_CARDINALITY_ESTIMATION = OFF;
+GO
+ALTER DATABASE SCOPED CONFIGURATION FOR SECONDARY SET LEGACY_CARDINALITY_ESTIMATION = PRIMARY;
+GO
+ALTER DATABASE SCOPED CONFIGURATION SET MAXDOP = 0;
+GO
+ALTER DATABASE SCOPED CONFIGURATION FOR SECONDARY SET MAXDOP = PRIMARY;
+GO
+ALTER DATABASE SCOPED CONFIGURATION SET PARAMETER_SNIFFING = ON;
+GO
+ALTER DATABASE SCOPED CONFIGURATION FOR SECONDARY SET PARAMETER_SNIFFING = PRIMARY;
+GO
+ALTER DATABASE SCOPED CONFIGURATION SET QUERY_OPTIMIZER_HOTFIXES = OFF;
+GO
+ALTER DATABASE SCOPED CONFIGURATION FOR SECONDARY SET QUERY_OPTIMIZER_HOTFIXES = PRIMARY;
+GO
+USE [MPTor]
+GO
+/****** Object:  Table [dbo].[Competitor]    Script Date: 29.05.2018 20:23:23 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Competitor](
+	[ID_Competitor] [int] NOT NULL,
+	[ID_Customer] [int] NULL,
+	[FirstName] [varchar](50) NULL,
+	[LastName] [varchar](50) NULL,
+ CONSTRAINT [PK_Competitor] PRIMARY KEY CLUSTERED 
+(
+	[ID_Competitor] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Customer]    Script Date: 29.05.2018 20:23:23 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Customer](
+	[ID_Customer] [int] IDENTITY(1,1) NOT NULL,
+	[FirstName] [varchar](50) NULL,
+	[LastName] [varchar](50) NULL,
+	[Birthday] [datetime] NULL,
+	[ID_CustomerType] [int] NULL,
+	[ActiveInLeague] [tinyint] NULL,
+	[ActiveCustomerCard] [tinyint] NULL,
+ CONSTRAINT [PK_Customer] PRIMARY KEY CLUSTERED 
+(
+	[ID_Customer] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[CustomerType]    Script Date: 29.05.2018 20:23:23 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[CustomerType](
+	[ID_CustomerType] [int] NOT NULL,
+	[Type] [varchar](50) NULL,
+	[Details] [varchar](50) NULL,
+ CONSTRAINT [PK_CustomerType] PRIMARY KEY CLUSTERED 
+(
+	[ID_CustomerType] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Kart]    Script Date: 29.05.2018 20:23:23 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Kart](
+	[ID_Kart] [int] NOT NULL,
+	[ID_KartType] [int] NULL,
+	[Active] [tinyint] NULL,
+	[InUse] [tinyint] NULL,
+	[Details] [varchar](50) NULL,
+ CONSTRAINT [PK_Kart] PRIMARY KEY CLUSTERED 
+(
+	[ID_Kart] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[KartType]    Script Date: 29.05.2018 20:23:23 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[KartType](
+	[ID_KartType] [int] NOT NULL,
+	[KartType] [nchar](10) NULL,
+	[Details] [varchar](50) NULL,
+ CONSTRAINT [PK_KartType] PRIMARY KEY CLUSTERED 
+(
+	[ID_KartType] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Layout]    Script Date: 29.05.2018 20:23:23 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Layout](
+	[ID_Layout] [int] NOT NULL,
+	[LayoutName] [varchar](50) NULL,
+	[LayoutLenght] [decimal](18, 0) NULL,
+	[IsActive] [tinyint] NULL,
+ CONSTRAINT [PK_Layout] PRIMARY KEY CLUSTERED 
+(
+	[ID_Layout] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[PriceList]    Script Date: 29.05.2018 20:23:23 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[PriceList](
+	[ID_Price] [int] NOT NULL,
+	[PriceName] [nchar](10) NULL,
+	[Price] [money] NULL,
+ CONSTRAINT [PK_Cennik] PRIMARY KEY CLUSTERED 
+(
+	[ID_Price] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Race]    Script Date: 29.05.2018 20:23:23 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Race](
+	[ID_Race] [int] NOT NULL,
+	[ID_Season] [int] NULL,
+	[Date] [datetime] NULL,
+	[ID_Layout] [int] NULL,
+	[Details] [varchar](50) NULL,
+ CONSTRAINT [PK_Race] PRIMARY KEY CLUSTERED 
+(
+	[ID_Race] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[RaceResult]    Script Date: 29.05.2018 20:23:23 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[RaceResult](
+	[ID_RaceResult] [int] NOT NULL,
+	[ID_Race] [int] NULL,
+	[ID_Competitor] [int] NULL,
+	[Time] [datetime] NULL,
+	[Clasified] [tinyint] NULL,
+	[Position] [int] NULL,
+ CONSTRAINT [PK_RaceResult] PRIMARY KEY CLUSTERED 
+(
+	[ID_RaceResult] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[RecordTime]    Script Date: 29.05.2018 20:23:24 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[RecordTime](
+	[ID_RecordTime] [int] NOT NULL,
+	[ID_Layout] [int] NULL,
+	[ID_Customer] [int] NULL,
+	[ID_Kart] [int] NULL,
+	[FirstName] [varchar](50) NULL,
+	[LastName] [varchar](50) NULL,
+	[RecordTime] [datetime] NULL,
+ CONSTRAINT [PK_RecordTime] PRIMARY KEY CLUSTERED 
+(
+	[ID_RecordTime] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Ride]    Script Date: 29.05.2018 20:23:24 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Ride](
+	[ID_Ride] [int] IDENTITY(1,1) NOT NULL,
+	[TotalPrice] [money] NULL,
+	[PricePH] [money] NULL,
+	[PrePaid] [money] NULL,
+	[ID_Customer] [int] NULL,
+	[ID_Kart] [int] NULL,
+	[OnTrack] [tinyint] NULL,
+	[StartingTime] [datetime] NULL,
+	[EndingTime] [datetime] NULL
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Season]    Script Date: 29.05.2018 20:23:24 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Season](
+	[ID_Season] [int] NOT NULL,
+	[ID_KartType] [int] NULL,
+	[ID_Standings] [int] NULL,
+	[Data] [datetime] NULL,
+	[SeasonName] [varchar](50) NULL,
+	[Details] [varchar](50) NULL,
+ CONSTRAINT [PK_Season] PRIMARY KEY CLUSTERED 
+(
+	[ID_Season] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Standings]    Script Date: 29.05.2018 20:23:24 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Standings](
+	[ID_Standings] [int] NOT NULL,
+	[ID_Competitor] [int] NULL,
+	[Points] [decimal](18, 0) NULL,
+ CONSTRAINT [PK_Standings] PRIMARY KEY CLUSTERED 
+(
+	[ID_Standings] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+SET IDENTITY_INSERT [dbo].[Customer] ON 
+
+INSERT [dbo].[Customer] ([ID_Customer], [FirstName], [LastName], [Birthday], [ID_CustomerType], [ActiveInLeague], [ActiveCustomerCard]) VALUES (0, NULL, NULL, NULL, 0, NULL, NULL)
+INSERT [dbo].[Customer] ([ID_Customer], [FirstName], [LastName], [Birthday], [ID_CustomerType], [ActiveInLeague], [ActiveCustomerCard]) VALUES (1, N'Jan', N'Kowalski', CAST(N'1990-02-02T00:00:00.000' AS DateTime), 1, 1, 1)
+INSERT [dbo].[Customer] ([ID_Customer], [FirstName], [LastName], [Birthday], [ID_CustomerType], [ActiveInLeague], [ActiveCustomerCard]) VALUES (2, N'Adam', N'Smok', CAST(N'2018-04-05T00:00:00.000' AS DateTime), NULL, 1, 1)
+INSERT [dbo].[Customer] ([ID_Customer], [FirstName], [LastName], [Birthday], [ID_CustomerType], [ActiveInLeague], [ActiveCustomerCard]) VALUES (6, N'QA', N'QW', CAST(N'2010-03-02T00:00:00.000' AS DateTime), NULL, 1, 1)
+INSERT [dbo].[Customer] ([ID_Customer], [FirstName], [LastName], [Birthday], [ID_CustomerType], [ActiveInLeague], [ActiveCustomerCard]) VALUES (8, N'TextBox', N'TextBox', CAST(N'2018-05-25T00:00:00.000' AS DateTime), NULL, 0, 1)
+INSERT [dbo].[Customer] ([ID_Customer], [FirstName], [LastName], [Birthday], [ID_CustomerType], [ActiveInLeague], [ActiveCustomerCard]) VALUES (9, N'Adam', N'Smok', CAST(N'1900-01-01T00:00:00.000' AS DateTime), NULL, 1, 1)
+INSERT [dbo].[Customer] ([ID_Customer], [FirstName], [LastName], [Birthday], [ID_CustomerType], [ActiveInLeague], [ActiveCustomerCard]) VALUES (10, N'Janek', N'Smok', CAST(N'1900-01-01T00:00:00.000' AS DateTime), NULL, 1, 1)
+INSERT [dbo].[Customer] ([ID_Customer], [FirstName], [LastName], [Birthday], [ID_CustomerType], [ActiveInLeague], [ActiveCustomerCard]) VALUES (11, N'Adam', N'Smok', CAST(N'1900-01-01T00:00:00.000' AS DateTime), NULL, 1, 1)
+INSERT [dbo].[Customer] ([ID_Customer], [FirstName], [LastName], [Birthday], [ID_CustomerType], [ActiveInLeague], [ActiveCustomerCard]) VALUES (12, N'Janek', N'Smok', CAST(N'1900-01-01T00:00:00.000' AS DateTime), NULL, 1, 1)
+INSERT [dbo].[Customer] ([ID_Customer], [FirstName], [LastName], [Birthday], [ID_CustomerType], [ActiveInLeague], [ActiveCustomerCard]) VALUES (13, N'Janek', N'Smok', CAST(N'1900-01-01T00:00:00.000' AS DateTime), NULL, 1, 1)
+SET IDENTITY_INSERT [dbo].[Customer] OFF
+INSERT [dbo].[CustomerType] ([ID_CustomerType], [Type], [Details]) VALUES (0, N'NonRegistred', N'1')
+INSERT [dbo].[CustomerType] ([ID_CustomerType], [Type], [Details]) VALUES (1, N'Standard', N'0.8')
+INSERT [dbo].[CustomerType] ([ID_CustomerType], [Type], [Details]) VALUES (2, N'VIP', N'0.5')
+INSERT [dbo].[Kart] ([ID_Kart], [ID_KartType], [Active], [InUse], [Details]) VALUES (0, NULL, NULL, NULL, NULL)
+INSERT [dbo].[KartType] ([ID_KartType], [KartType], [Details]) VALUES (0, N'50CC      ', N'0.8')
+INSERT [dbo].[KartType] ([ID_KartType], [KartType], [Details]) VALUES (1, N'100CC     ', N'1')
+INSERT [dbo].[KartType] ([ID_KartType], [KartType], [Details]) VALUES (2, N'150CC     ', N'1.25')
+INSERT [dbo].[Layout] ([ID_Layout], [LayoutName], [LayoutLenght], [IsActive]) VALUES (0, N'GrandPrix', CAST(750 AS Decimal(18, 0)), 1)
+INSERT [dbo].[Layout] ([ID_Layout], [LayoutName], [LayoutLenght], [IsActive]) VALUES (1, N'Sprint', CAST(444 AS Decimal(18, 0)), 0)
+INSERT [dbo].[Layout] ([ID_Layout], [LayoutName], [LayoutLenght], [IsActive]) VALUES (2, N'8', CAST(690 AS Decimal(18, 0)), 0)
+INSERT [dbo].[PriceList] ([ID_Price], [PriceName], [Price]) VALUES (0, N'Normalny  ', 15.0000)
+INSERT [dbo].[PriceList] ([ID_Price], [PriceName], [Price]) VALUES (1, N'Ulgowy    ', 12.0000)
+INSERT [dbo].[PriceList] ([ID_Price], [PriceName], [Price]) VALUES (2, N'NormalnyP ', 12.5000)
+INSERT [dbo].[PriceList] ([ID_Price], [PriceName], [Price]) VALUES (3, N'UlgowyP   ', 11.0000)
+INSERT [dbo].[PriceList] ([ID_Price], [PriceName], [Price]) VALUES (4, N'RH        ', 25.0000)
+INSERT [dbo].[PriceList] ([ID_Price], [PriceName], [Price]) VALUES (5, N'RK        ', 10.0000)
+SET IDENTITY_INSERT [dbo].[Ride] ON 
+
+INSERT [dbo].[Ride] ([ID_Ride], [TotalPrice], [PricePH], [PrePaid], [ID_Customer], [ID_Kart], [OnTrack], [StartingTime], [EndingTime]) VALUES (7, NULL, 12.0000, 24.0000, 0, NULL, 1, CAST(N'2018-05-28T17:31:14.147' AS DateTime), CAST(N'2018-05-28T18:17:42.050' AS DateTime))
+INSERT [dbo].[Ride] ([ID_Ride], [TotalPrice], [PricePH], [PrePaid], [ID_Customer], [ID_Kart], [OnTrack], [StartingTime], [EndingTime]) VALUES (14, NULL, 12.0000, 0.0000, 0, NULL, 0, CAST(N'2018-05-28T17:42:26.293' AS DateTime), CAST(N'2018-05-28T18:21:17.443' AS DateTime))
+INSERT [dbo].[Ride] ([ID_Ride], [TotalPrice], [PricePH], [PrePaid], [ID_Customer], [ID_Kart], [OnTrack], [StartingTime], [EndingTime]) VALUES (8, NULL, 15.0000, 15.0000, 0, NULL, 1, CAST(N'2018-05-28T17:34:10.173' AS DateTime), NULL)
+INSERT [dbo].[Ride] ([ID_Ride], [TotalPrice], [PricePH], [PrePaid], [ID_Customer], [ID_Kart], [OnTrack], [StartingTime], [EndingTime]) VALUES (9, NULL, 12.0000, 12.0000, 0, NULL, 1, CAST(N'2018-05-28T17:35:54.593' AS DateTime), NULL)
+INSERT [dbo].[Ride] ([ID_Ride], [TotalPrice], [PricePH], [PrePaid], [ID_Customer], [ID_Kart], [OnTrack], [StartingTime], [EndingTime]) VALUES (10, NULL, 12.0000, 12.0000, 0, NULL, 1, CAST(N'2018-05-28T17:36:22.513' AS DateTime), CAST(N'2018-05-28T18:01:21.010' AS DateTime))
+INSERT [dbo].[Ride] ([ID_Ride], [TotalPrice], [PricePH], [PrePaid], [ID_Customer], [ID_Kart], [OnTrack], [StartingTime], [EndingTime]) VALUES (11, NULL, 12.0000, 264.0000, 0, NULL, 1, CAST(N'2018-05-28T17:36:56.350' AS DateTime), NULL)
+INSERT [dbo].[Ride] ([ID_Ride], [TotalPrice], [PricePH], [PrePaid], [ID_Customer], [ID_Kart], [OnTrack], [StartingTime], [EndingTime]) VALUES (12, NULL, 12.0000, 84.0000, 0, NULL, 1, CAST(N'2018-05-28T17:37:19.623' AS DateTime), NULL)
+INSERT [dbo].[Ride] ([ID_Ride], [TotalPrice], [PricePH], [PrePaid], [ID_Customer], [ID_Kart], [OnTrack], [StartingTime], [EndingTime]) VALUES (13, NULL, 12.0000, 24.0000, 0, NULL, 1, CAST(N'2018-05-28T17:37:47.313' AS DateTime), NULL)
+SET IDENTITY_INSERT [dbo].[Ride] OFF
+ALTER TABLE [dbo].[Competitor]  WITH CHECK ADD  CONSTRAINT [FK_SeasonMember_Customer] FOREIGN KEY([ID_Customer])
+REFERENCES [dbo].[Customer] ([ID_Customer])
+GO
+ALTER TABLE [dbo].[Competitor] CHECK CONSTRAINT [FK_SeasonMember_Customer]
+GO
+ALTER TABLE [dbo].[Customer]  WITH CHECK ADD  CONSTRAINT [FK_Customer_CustomerType] FOREIGN KEY([ID_CustomerType])
+REFERENCES [dbo].[CustomerType] ([ID_CustomerType])
+GO
+ALTER TABLE [dbo].[Customer] CHECK CONSTRAINT [FK_Customer_CustomerType]
+GO
+ALTER TABLE [dbo].[Kart]  WITH CHECK ADD  CONSTRAINT [FK_Kart_KartType] FOREIGN KEY([ID_KartType])
+REFERENCES [dbo].[KartType] ([ID_KartType])
+GO
+ALTER TABLE [dbo].[Kart] CHECK CONSTRAINT [FK_Kart_KartType]
+GO
+ALTER TABLE [dbo].[Race]  WITH CHECK ADD  CONSTRAINT [FK_Race_Layout] FOREIGN KEY([ID_Layout])
+REFERENCES [dbo].[Layout] ([ID_Layout])
+GO
+ALTER TABLE [dbo].[Race] CHECK CONSTRAINT [FK_Race_Layout]
+GO
+ALTER TABLE [dbo].[Race]  WITH CHECK ADD  CONSTRAINT [FK_Race_Season] FOREIGN KEY([ID_Season])
+REFERENCES [dbo].[Season] ([ID_Season])
+GO
+ALTER TABLE [dbo].[Race] CHECK CONSTRAINT [FK_Race_Season]
+GO
+ALTER TABLE [dbo].[RaceResult]  WITH CHECK ADD  CONSTRAINT [FK_RaceResult_Race] FOREIGN KEY([ID_Race])
+REFERENCES [dbo].[Race] ([ID_Race])
+GO
+ALTER TABLE [dbo].[RaceResult] CHECK CONSTRAINT [FK_RaceResult_Race]
+GO
+ALTER TABLE [dbo].[RecordTime]  WITH CHECK ADD  CONSTRAINT [FK_RecordTime_Customer] FOREIGN KEY([ID_Customer])
+REFERENCES [dbo].[Customer] ([ID_Customer])
+GO
+ALTER TABLE [dbo].[RecordTime] CHECK CONSTRAINT [FK_RecordTime_Customer]
+GO
+ALTER TABLE [dbo].[RecordTime]  WITH CHECK ADD  CONSTRAINT [FK_RecordTime_Kart] FOREIGN KEY([ID_Kart])
+REFERENCES [dbo].[Kart] ([ID_Kart])
+GO
+ALTER TABLE [dbo].[RecordTime] CHECK CONSTRAINT [FK_RecordTime_Kart]
+GO
+ALTER TABLE [dbo].[RecordTime]  WITH CHECK ADD  CONSTRAINT [FK_RecordTime_Layout] FOREIGN KEY([ID_Layout])
+REFERENCES [dbo].[Layout] ([ID_Layout])
+GO
+ALTER TABLE [dbo].[RecordTime] CHECK CONSTRAINT [FK_RecordTime_Layout]
+GO
+ALTER TABLE [dbo].[Ride]  WITH CHECK ADD  CONSTRAINT [FK_Ride_Customer] FOREIGN KEY([ID_Customer])
+REFERENCES [dbo].[Customer] ([ID_Customer])
+GO
+ALTER TABLE [dbo].[Ride] CHECK CONSTRAINT [FK_Ride_Customer]
+GO
+ALTER TABLE [dbo].[Ride]  WITH CHECK ADD  CONSTRAINT [FK_Ride_Kart] FOREIGN KEY([ID_Kart])
+REFERENCES [dbo].[Kart] ([ID_Kart])
+GO
+ALTER TABLE [dbo].[Ride] CHECK CONSTRAINT [FK_Ride_Kart]
+GO
+ALTER TABLE [dbo].[Season]  WITH CHECK ADD  CONSTRAINT [FK_Season_KartType] FOREIGN KEY([ID_KartType])
+REFERENCES [dbo].[KartType] ([ID_KartType])
+GO
+ALTER TABLE [dbo].[Season] CHECK CONSTRAINT [FK_Season_KartType]
+GO
+ALTER TABLE [dbo].[Season]  WITH CHECK ADD  CONSTRAINT [FK_Season_Standings] FOREIGN KEY([ID_Standings])
+REFERENCES [dbo].[Standings] ([ID_Standings])
+GO
+ALTER TABLE [dbo].[Season] CHECK CONSTRAINT [FK_Season_Standings]
+GO
+ALTER TABLE [dbo].[Standings]  WITH CHECK ADD  CONSTRAINT [FK_Standings_Competitor] FOREIGN KEY([ID_Competitor])
+REFERENCES [dbo].[Competitor] ([ID_Competitor])
+GO
+ALTER TABLE [dbo].[Standings] CHECK CONSTRAINT [FK_Standings_Competitor]
+GO
+USE [master]
+GO
+ALTER DATABASE [MPTor] SET  READ_WRITE 
+GO
